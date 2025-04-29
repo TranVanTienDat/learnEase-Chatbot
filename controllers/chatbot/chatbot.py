@@ -21,7 +21,7 @@ class Chatbot(Resource):
             # Tạo state object
             state = State(question=data["question"])
             # Tạo câu truy vấn và thực thi
-            langChain = LangChain('postgresql://postgres:aA%4012345@127.0.0.1:5432/learnEase')
+            langChain = LangChain()
             query_result_state = write_query(state,langChain)
             if query_result_state is None:
                 return {"error": "Failed to generate query"}, 500

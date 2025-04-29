@@ -48,4 +48,4 @@ def generate_answer(state: State,llm):
         "Please provide a clear and natural response in Vietnamese language."
     )
     response = llm.invoke(prompt)
-    return {"answer": response.content}
+    return {"content": response.content}
