@@ -26,6 +26,6 @@ class LangChain:
             db_url = f"postgresql://{configDB['user']}:{encoded_password}@{configDB['host']}:{configDB['port']}/{configDB['db']}"
             
             cls._instance.db = SQLDatabase.from_uri(db_url)
-            cls._instance.llm = init_chat_model("mistralai/Mixtral-8x7B-Instruct-v0.1", model_provider="together")
+            cls._instance.llm = init_chat_model("meta-llama/Llama-3.3-70B-Instruct-Turbo-Free", model_provider="together")
             cls._instance.execute_query_tool = QuerySQLDatabaseTool(db=cls._instance.db)
         return cls._instance
