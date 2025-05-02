@@ -20,10 +20,11 @@ def write_query(state: State,langChain :LangChain):
             {
                 "dialect": langChain.db.dialect,
                 "top_k": 10,
-                "table_info": langChain.db.get_table_info(["classes"]),
+                "table_info": langChain.db.get_table_info(),
                 "input": state["question"],
             }
         )
+    
     structured_llm = langChain.llm.with_structured_output(QueryOutput)
     result = structured_llm.invoke(prompt)
     return {"query": result["query"]}
@@ -33,19 +34,20 @@ def write_query(state: State,langChain :LangChain):
 def execute_query(state: State,db):
     """Execute SQL query."""
     execute_query_tool = QuerySQLDatabaseTool(db=db)
-    print(f"execute_query_tool: {execute_query_tool}")
     return {"result": execute_query_tool.invoke(state["query"])}
 
 
 def generate_answer(state: State,llm):
     """Answer question using retrieved information as context."""
     prompt = (
-        "Given the following user question, corresponding SQL query, "
-        "and SQL result, answer the user question.\n\n"
-        f'Question: {state["question"]}\n'
-        f'SQL Query: {state["query"]}\n'
-        f'SQL Result: {state["result"]}\n\n'
-        "Please provide a clear and natural response in Vietnamese language."
-    )
+    "You are an assistant who helps answer user questions about the system. "
+    "Do not provide SQL queries or mention SQL in your response.\n\n"
+    "Given the following user question, corresponding SQL query, "
+    "and SQL result, answer the user question naturally.\n\n"
+    f'Question: {state["question"]}\n'
+    f'SQL Query: {state["query"]}\n'
+    f'SQL Result: {state["result"]}\n\n'
+    "Please provide a clear and natural response in Vietnamese language."
+)
     response = llm.invoke(prompt)
     return {"content": response.content}
