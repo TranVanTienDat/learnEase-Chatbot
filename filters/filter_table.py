@@ -11,10 +11,10 @@ class Table(BaseModel):
 
 def create_table_chain():
     langChain = LangChain()
-    table_names = "\n".join(langChain.db.get_usable_table_names())
-    
-    system = system = """Return the names of any SQL tables that are relevant to the user question.
+
+    system  = """Return the names of any SQL tables that are relevant to the user question.
     The tables are:
+    
     classes
     """
 
@@ -29,6 +29,3 @@ def create_table_chain():
     category_chain = prompt | llm_with_tools | output_parser
 
     return category_chain
-
-# Create the chain
-table_chain = create_table_chain()

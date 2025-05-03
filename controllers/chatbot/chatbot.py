@@ -20,19 +20,6 @@ class Chatbot(Resource):
             if "question" not in data:
                 return {"error": "Missing question in request"}, 400
             
-            sql_prompt = """
-            You are a SQL query generator. You will be given a question and you need to generate a SQL query to answer that question.
-            Output only the SQL query, nothing else.
-            When selecting from tables, only use the following columns:
-                - classes: name, full_name
-                - seasons: name, duration
-                - subject: name
-            and no limit on the number of rows.
-            Wrap your SQL query inside triple backticks and specify 'sql' language like ```sql.
-            Output only the SQL query wrapped inside the code block, nothing else.
-            Question: """ + data["question"]
-            data["question"] = sql_prompt
-            
             # Tạo state object
             state = State(question=data["question"])
             # Tạo câu truy vấn và thực thi
@@ -45,11 +32,16 @@ class Chatbot(Resource):
                                 })
             
             sql = extract_sql_code(query_text)
+
+            print("SQL Query: ", sql)
+
             query_state = State( query=sql)
 
             query_ex_state = execute_query(query_state,langChain.db)
             if query_ex_state is None:
                 return {"error": "Failed to execute query"}, 500
+            
+            print("Query Result: ", query_ex_state["result"])
             
             new_state = State(question=data["question"], query=query_state["query"], result=query_ex_state["result"], )
 

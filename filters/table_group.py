@@ -11,8 +11,8 @@ def get_tables(categories: List[Table]) -> List[str]:
             tables.extend(
                 [
                     "seasons",
-                    "seasons_class_links",
                     "subjects",
+                    "seasons_class_links",
                     "classes_subjects_links",
                     "components_setting_schedules"
                 ]

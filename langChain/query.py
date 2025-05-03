@@ -48,6 +48,9 @@ def generate_answer(state: State,llm):
     f'SQL Query: {state["query"]}\n'
     f'SQL Result: {state["result"]}\n\n'
     "Please provide a clear and natural response in Vietnamese language."
+    "Based on the data above, answer the user's question clearly, concisely, and completely. "
+    "Do not make assumptions, do not comment on the accuracy of the data, and do not offer advice."
+
 )
     response = llm.invoke(prompt)
     return {"content": response.content}
