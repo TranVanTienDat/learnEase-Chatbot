@@ -50,7 +50,7 @@ def generate_answer(state: State,llm):
     "Please provide a clear and natural response in Vietnamese language."
     "Based on the data above, answer the user's question clearly, concisely, and completely. "
     "Do not make assumptions, do not comment on the accuracy of the data, and do not offer advice."
-
+    "If an error occurs, say Sorry the system is faulty"
 )
     response = llm.invoke(prompt)
     return {"content": response.content}
