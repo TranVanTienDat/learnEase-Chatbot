@@ -6,6 +6,7 @@ from langChain import write_query, execute_query, generate_answer
 from langChain.langChain import LangChain
 from filters.query_full import create_full_chain
 from lib.convert_text_to_sql import extract_sql_code
+from langChain.handle_input import ask_llama
 class Chatbot(Resource):
     def get(self):
         return {
@@ -20,9 +21,16 @@ class Chatbot(Resource):
             if "question" not in data:
                 return {"error": "Missing question in request"}, 400
             
-            # Tạo state object
+            type_answer = ask_llama(data["question"])
+            if type_answer["action"] == "chat":
+                return {
+                    "status": "success",
+                    "data": {
+                        "message": type_answer["answer"]
+                    }
+                }, 201
+            
             state = State(question=data["question"])
-            # Tạo câu truy vấn và thực thi
             langChain = LangChain()
 
             # create query
