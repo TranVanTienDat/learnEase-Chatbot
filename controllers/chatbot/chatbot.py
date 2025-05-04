@@ -26,7 +26,7 @@ class Chatbot(Resource):
                 return {
                     "status": "success",
                     "data": {
-                        "message": type_answer["answer"]
+                        "content": type_answer["answer"]
                     }
                 }, 201
             
