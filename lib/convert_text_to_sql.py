@@ -14,4 +14,4 @@ def extract_sql_code(text: str) -> str:
     match = re.search(r'```sql\s*(.*?)\s*```', text, re.DOTALL)
     if match:
         return match.group(1).strip()
-    return None
+    return text

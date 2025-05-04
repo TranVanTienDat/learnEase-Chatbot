@@ -7,6 +7,14 @@ from langChain.langChain import LangChain
 from filters.query_full import create_full_chain
 from lib.convert_text_to_sql import extract_sql_code
 from langChain.handle_input import ask_llama
+
+prompt = """\n\nOnly return to the standard SQL command and do not provide any more information\n         
+Rules:
+- Only select allowed columns:
+  - classes: name, full_name
+  - seasons: name, duration
+  - subjects: name
+- Do NOT select any columns like id, *_id, key, *_key."""
 class Chatbot(Resource):
     def get(self):
         return {
@@ -30,7 +38,7 @@ class Chatbot(Resource):
                     }
                 }, 201
             
-            state = State(question=data["question"])
+            state = State(question=data["question"]+ prompt)
             langChain = LangChain()
 
             # create query
@@ -40,11 +48,10 @@ class Chatbot(Resource):
                                 })
             
             sql = extract_sql_code(query_text)
-
-            print("SQL Query: ", sql)
-
+            print("Query State: ", sql)
             query_state = State( query=sql)
 
+    
             query_ex_state = execute_query(query_state,langChain.db)
             if query_ex_state is None:
                 return {"error": "Failed to execute query"}, 500
