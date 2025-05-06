@@ -7,6 +7,7 @@ def init_app(app: LearEaseApp):
     from flask_cors import CORS 
 
     from controllers.chatbot import bp as chatbot_bp
+    from controllers.chat import bp as chat_bp
 
 
     CORS(
@@ -15,4 +16,5 @@ def init_app(app: LearEaseApp):
         methods=["GET", "PUT", "POST", "DELETE", "OPTIONS", "PATCH"],
     )
     app.register_blueprint(chatbot_bp)
+    app.register_blueprint(chat_bp)
 
