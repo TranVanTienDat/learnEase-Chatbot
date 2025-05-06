@@ -25,21 +25,16 @@ def write_query(state: State):
     """Generate SQL query to fetch information."""
     langChanin = LangChain('postgresql://postgres:aA%4012345@127.0.0.1:5432/learnEase')
 
-    # prompt = query_prompt_template.invoke(
-    #     {
-    #         "dialect": langChanin.db.dialect,
-    #         "top_k": 3,
-    #         "table_info": langChanin.db.get_table_info(),
-    #         "input": state["question"],
-    #     }
-    # )
-
-    prompt = SIMPLE_PROMPT.format(
-        table_info=langChanin.db.get_table_info(max_tables=3),
-        input=state["question"]
+    prompt = query_prompt_template.invoke(
+        {
+            "dialect": langChanin.db.dialect,
+            "top_k": 6,
+            "table_info": langChanin.db.get_table_info(["classes", "seasons", "subjects","seasons_class_links","classes_subjects_links","components_setting_schedules"]),
+            "input": state["question"],
+        }
     )
 
-    print(f"prompt: {prompt}")
+  
     structured_llm = langChanin.llm.with_structured_output(QueryOutput)
     result = structured_llm.invoke(prompt)
     return {"query": result["query"]}

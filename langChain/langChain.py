@@ -9,12 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 os.environ.get("TOGETHER_API_KEY")
-# class LangChain:
-#     def __init__(self, db_url: str):
-#         self.db = SQLDatabase.from_uri("postgresql://postgres:aA%4012345@127.0.0.1:5432/learnEase")
-#         self.llm = init_chat_model("mistralai/Mixtral-8x7B-Instruct-v0.1", model_provider="together")
-#         self.execute_query_tool = QuerySQLDatabaseTool(db=self.db)
-
+os.environ.get("GOOGLE_API_KEY")
 class LangChain:
     _instance = None
     

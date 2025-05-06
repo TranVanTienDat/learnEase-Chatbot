@@ -47,9 +47,11 @@ def generate_answer(state: State,llm):
     f'Question: {state["question"]}\n'
     f'SQL Query: {state["query"]}\n'
     f'SQL Result: {state["result"]}\n\n'
-    "Please provide a clear and natural response in Vietnamese language."
-    "Based on the data above, answer the user's question clearly, concisely, and completely. "
-    "Do not make assumptions, do not comment on the accuracy of the data, and do not offer advice."
+    "1. If the result only contains columns with the names 'id' or 'key', you may use them to answer the question.\n"
+    "2. If the result contains columns other than 'id' and 'key', you should only use the data from those columns, ignoring any information from 'id' and 'key'.\n"
+    "Please provide a clear and natural response in Vietnamese language.\n"
+    "Based on the data above, answer the user's question clearly, concisely, and completely. \n"
+    "Do not make assumptions, do not comment on the accuracy of the data, and do not offer advice.\n"
     "If an error occurs, say Sorry the system is faulty"
 )
     response = llm.invoke(prompt)
