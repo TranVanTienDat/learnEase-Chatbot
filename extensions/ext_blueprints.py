@@ -12,10 +12,10 @@ def init_app(app: LearEaseApp):
 
     CORS(
         chatbot_bp,
-        chat_bp,
         allow_headers=["Content-Type", "X-App-Code"],
         methods=["GET", "PUT", "POST", "DELETE", "OPTIONS", "PATCH"],
     )
+    CORS(chat_bp, allow_headers=["Content-Type", "X-App-Code"], methods=["GET", "PUT", "POST", "DELETE", "OPTIONS", "PATCH"])
     app.register_blueprint(chatbot_bp)
     app.register_blueprint(chat_bp)
 
