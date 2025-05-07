@@ -16,9 +16,8 @@ class Chat(Resource):
             # Kiểm tra xem có question trong data không
             if "question" not in data:
                 return {"error": "Missing question in request"}, 400
-            import uuid
 
-            thread_id = str(uuid.uuid4())
+            thread_id = data["id"]
             config = {"configurable": {"thread_id": thread_id}}
             agent_executor=new_agent()
             full_content=""
