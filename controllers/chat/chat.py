@@ -19,11 +19,10 @@ class Chat(Resource):
 
             thread_id = data["id"]
             config = {"configurable": {"thread_id": thread_id}}
-            agent_executor=new_agent()
+            agent_executor=new_agent(thread_id)
             full_content=""
-            for chunk in agent_executor.stream({"messages": [HumanMessage(content=data["question"])]},config, stream_mode="values"):
+            for chunk in agent_executor.stream({"input": data["question"]} ):
                 full_content+=extract_content_from_chunk(chunk)
-                print("full_content",full_content)
                 
             print("full_content",full_content)
             return {
