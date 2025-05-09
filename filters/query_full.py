@@ -48,11 +48,7 @@ Assume that the "student_registrations" table has the following columns:
 - "full_name"
 - "parent_name"
 - "parent_phone"
-- "class_id" (you need to query the class_id based on class name from "classes" table)
-
-First, get the "id" of the class from the "classes" table where "name" = class name provided.
-
-Then, insert the student using the retrieved class id.
+- "class_name 
 
 Respond only with the SQL needed.
 not needed 
@@ -61,9 +57,8 @@ not needed
 - {top_k} results.
 
 Use format:
-
-First draft: 
-Final answer: 
+First draft: <SQLquery>
+Final answer: <SQLquery>
 """
 
 
