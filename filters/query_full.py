@@ -28,8 +28,8 @@ Write an initial draft of the query. Then double check the {dialect} query for c
 
 Use format:
 
-First draft: FIRST_DRAFT_QUERY
-Final answer: FINAL_ANSWER_QUERY
+First draft: <SQLquery>
+Final answer: <SQLquery>
 """
 
 
